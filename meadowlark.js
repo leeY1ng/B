@@ -2,6 +2,7 @@ var express = require("express");
 var app = express();
 var fortune = require("./lib/fortune.js");
 
+
 //设置handlebars视图引擎
 //创建了一个视图引擎并对express进行了配置
 //将其作为默认的视图引擎
@@ -22,8 +23,18 @@ app.get("/",function(req,res){
 	res.render("home");
 });
 app.get("/about",function(req,res){
-	res.render("about",{fortune:fortune.getFortune()});
+	res.render("about",{fortune:fortune.getFortune(),
+						pageTestScript:"/qa/tests-about.js"
+	});
 });
+
+app.get("/tours/hood-river",function(req,res){
+	res.render("tours/hood-river");
+});
+app.get("/tours/request-group-rate",function(req,res){
+	res.render("tours/request-group-rate");
+});
+
 //make 404 page
 app.use(function(req,res,next){	
 	res.status(404);
@@ -39,3 +50,5 @@ app.use(function(err,req,res,next){
 app.listen(app.get("port"),function(){
 	console.log("Express started on http://localhost" +  app.get("port") + ";press Ctrl+c to ternimate");
 });
+
+123;
