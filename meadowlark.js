@@ -6,7 +6,22 @@ var fortune = require("./lib/fortune.js");
 //设置handlebars视图引擎
 //创建了一个视图引擎并对express进行了配置
 //将其作为默认的视图引擎
-var handlebars = require("express3-handlebars").create({defaultLayout:"main"});
+
+// var handlebars = require("express3-handlebars").create({defaultLayout:"main"});
+
+var handlebars = require("express3-handlebars").create({
+	defaultLayout:"main",
+	helpers:{
+		section:function(name,options){
+			if(! this._sections){
+				this._sections = {};
+			}
+			this._sections[name] = options.fn(this);
+			return null;
+		}
+	},
+})	
+
 app.engine("handlebars",handlebars.engine);
 app.set("view engine","handlebars");
 
@@ -19,9 +34,19 @@ app.use(function(req,res,next){
 	next();
 });
 
+app.use(function(req,res,next){
+	if(!res.locals.partials){
+		res.locals.partials ={};
+	}
+	res.locals.partials.weather = getWeatherData();
+	next();
+});
+
+
 app.get("/",function(req,res){
 	res.render("home");
 });
+
 app.get("/about",function(req,res){
 	res.render("about",{fortune:fortune.getFortune(),
 						pageTestScript:"/qa/tests-about.js"
@@ -34,6 +59,12 @@ app.get("/tours/hood-river",function(req,res){
 app.get("/tours/request-group-rate",function(req,res){
 	res.render("tours/request-group-rate");
 });
+
+app.get("/jquerytest",function(req,res){
+	res.render("jquerytest");
+})
+
+
 
 //make 404 page
 app.use(function(req,res,next){	
@@ -51,4 +82,30 @@ app.listen(app.get("port"),function(){
 	console.log("Express started on http://localhost" +  app.get("port") + ";press Ctrl+c to ternimate");
 });
 
-123;
+function getWeatherData(){
+	return {
+		locations:[
+			{
+				name:"portland",
+				forecastUrl:"http://www.wunderground.com/us/or/portland.html",
+				iconUrl:"http://icons-ak.wxug.com/i/c/k/cloudy.gif",
+				weather:"Overcast",
+				temp:"54.1 F(12.3 C)"
+			},
+			{
+				name:"bend",
+				forecastUrl:"http://www.wunderground.com/us/or/bend.html",
+				iconUrl:"http://icons-ak.wxug.com/i/c/k/partlycloudy.gif",
+				weather:"partly cloudy",
+				temp:"55.0 F(12.8 C)"
+			},
+			{
+				name:"manzanita",
+				forecastUrl:"http://www.wunderground.com/us/or/manzanita.html",
+				iconUrl:"http://icons-ak.wxug.com/i/c/k/rain.gif",
+				weather:"light rain",
+				temp:"55.0 F(12.8 C)"
+			}
+		],
+	};
+}

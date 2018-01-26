@@ -2,6 +2,9 @@
 <html>
 <head>
 	<title>Meadowlark Travle</title>
+
+	{{{_sections.head}}}
+
 	{{#if showTests}}
 		<link rel="stylesheet" href="/vendor/mocha.css">
 	{{/if}}
@@ -25,5 +28,8 @@
 		{{/if}}
 		<script>mocha.run();</script>
 	{{/if}}
+
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+	{{{_section.jquery}}}
 </body>
 </html>
