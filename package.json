@@ -4,8 +4,12 @@
   "description": "",
   "main": "meadowlark.js",
   "dependencies": {
+    "body": "^5.1.0",
     "express": "^4.16.2",
-    "express3-handlebars": "^0.5.2"
+    "express3-handlebars": "^0.5.2",
+    "formidable": "^1.1.1",
+    "jquery-file-upload-middleware": "^0.1.8",
+    "parser": "^0.1.4"
   },
   "devDependencies": {
     "chai": "^4.1.2",

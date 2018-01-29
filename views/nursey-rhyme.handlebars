@@ -1,0 +1,45 @@
+<!--  {{#section "head"}}
+	<script src="https://cdn.bootcss.com/handlebars.js/4.0.11/handlebars.min.js"></script>
+
+
+	<script id="nurseyRhymeTemplate" type="text/x-handlebars-template">
+	Marry had a little <b>\{{animal}}</b>,its <b>\{{bodyPart}}</b> was <b>\{{adjective}} </b> as <b>\{{noun}}</b></script>
+{{/section}}
+
+{{#section "jquery"}}
+	$(document).query(function(){
+		var nurseyRhymeTemplate = handlebars.compile(
+			$("#nurseyRhymeTemplate").html());
+	});
+{{/section}} -->
+
+<div id="nurseyRhyme">Click a button</div>
+
+<button id="btnNuurseyRhyme">Generate nurseey rhyma</button>
+<button id="btnNurseyRhyme">Generate nursey rhyme from AJAX</button>
+
+<!-- {{#section "jquery"}}
+	<script>
+		$(document).ready(function(){
+			var nurseyRhymeTemplate = Handlebars.compile($("#nurseyRhymeTemplate").html());
+			var $nurseyRhymeTemplate = $("#nurseyRhymeTemplate");
+			$("#btnNurseyRhyme").on("click",function(evt){
+				evt.preventDefault();
+				$nurseyRhyme.html(nurseyRhymeTemplate({
+						animal:"basilisk",
+						bodyPart:"tail",
+						adjective:"sharp",
+						noun:"a needle"
+				}));
+			});
+			$("#btnNurseyRhymeAjax").on("click",function(evt){
+				evt.preventDefault();
+				$.ajax("/data/nursey-rhyme",{
+					success:function(data){
+						$nurseyRhyme.html(nurseyRhymeTemplate(data));
+					}
+				});
+			});
+		});
+	</script>
+{{\section}} -->
