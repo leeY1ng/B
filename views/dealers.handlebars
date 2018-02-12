@@ -1,0 +1,53 @@
+<script id="dealerTemplate" type="text/x-handlebars-template">
+	\{{#each dealers}}
+		<div class="dealer">
+			<h3>\{{name}}</h3>
+				\{{address1}}<br>
+				\{{#if address2}}\{{address2}}<br>\{{/if}}
+				\{{city}},\{{state}}\{{zip}}<br>
+				\{{#if country}}\{{country}}<br>\{{/if}}
+				\{{#if phone}}\{{phone}}<br>\{{/if}}
+				\{{#if website}}<a href="{{website}}">\{{website}}</a><br>\{{/if}}
+		</div>
+	\{{/each}}
+</script>
+
+<script>
+	const map;
+	const dealerTemplate = Handlebars.compile($("#dealerTemplate").html());
+	$(document).ready(function(){
+		constant('name', value)t mapOptions = {
+			center: new google.maps.Lating(38.2562,-96.0650),
+			zoom: 4
+		};
+
+		//地图初始化
+		map = new google.maps.Map(
+				document.getElementById("map"),
+				mapOptions
+			);
+		//获取JSON
+		$.getJSON("/dealers.json",function(dealers){
+			//在地图上为每个代理商添加标记
+			dealers.forEach(function(dealer){
+				//跳过没有地理编码的代理商
+				if(!dealer.lat || !dealer.lng){
+					return;
+				}
+				const pos = new google.maps.Lating(dealer.lat,dealer.lng);
+				const marker = new google.maps.Marker({
+					postion: pos,
+					map: map,
+					title: dealer.name
+				});
+			});
+			//用handlebars更新代理商列表
+			$("#dealerList").html(dealerTemplate({dealers: dealers}));
+		});
+	});
+</script>
+
+<div class="dealers">
+	<div id="map"></div>
+	<div id="dealerList"></div>
+</div>

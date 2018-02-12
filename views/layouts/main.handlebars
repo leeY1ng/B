@@ -9,10 +9,40 @@
 		<link rel="stylesheet" href="/vendor/mocha.css">
 	{{/if}}
 		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<style type="text/css">
+			a.currency {
+				text-decoration: none;
+			}
+			.currency.selected {
+				font-weight: bold;
+				font-size: 150%;
+			}
+		</style>
+		<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+		<!-- <script src="{{static '/js/meadowlark.min.js'}}"></script> -->
+
+		<!-- <link rel="stylesheet" href="{{static '/css/meadowlark.min.css'}}"> -->
+
+	{{#each _bundle.css}}
+		<!-- <link rel="stylesheet" href="{{static .}}"> -->
+	{{/each}}
+
+	{{#each _bundle.js.head}}
+		<!-- <script src="{{static .}}"></script> -->
+	{{/each}}
 
 </head>
 <body>
 	<header><img src="/img/logo.jpg" alt="Meadowlark Travel logo"></header>
+
+	{{#if flash}}
+		<div class="alert alert-dismissible alert-{{flash.type}}">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<strong>{{flash.intro}}</strong>{{{flash.message}}}
+		</div>
+	{{/if}}
+	
 	{{{body}}}
 	
 
@@ -33,6 +63,8 @@
 
 	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 	{{{_section.jquery}}}
+
+	
 
 </body>
 </html>
